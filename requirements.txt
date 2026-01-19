@@ -1,0 +1,32 @@
+# Core & Utilities
+python-box
+pyYAML>=6.0
+types-PyYAML
+ensure
+joblib
+tqdm
+scipy
+numpy
+pandas
+
+# Deep Learning (PyTorch)
+torch
+torchvision
+albumentations
+
+# MLOps (DagsHub, DVC, MLflow)
+mlflow>=2.10.0
+dagshub
+dvc
+dvc-s3
+
+# Visualization & Notebook
+matplotlib
+seaborn
+notebook
+awscli
+
+# Web Server
+Flask
+Flask-Cors
+-e .

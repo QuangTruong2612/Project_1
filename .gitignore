@@ -1,0 +1,7 @@
+__pycache__/
+/data
+/.aws
+*.log
+*.env
+*.pyc
+.vscode/
