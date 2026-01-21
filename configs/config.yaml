@@ -1,0 +1,12 @@
+artifacts_root: artifacts
+
+training_model:
+  data_classification: data/classification_task
+  data_segmentation: data/segmentation_task
+
+evaluation_model:
+  root_dir: artifacts/evaluation_model
+  model_path: artifacts/training/model.pth
+  report_path: artifacts/evaluation_model/report.json
+  data_classification: data/classification_task
+  data_segmentation: data/segmentation_task

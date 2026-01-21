@@ -1,0 +1,52 @@
+name : workflow
+
+on:
+    push:
+        branches:
+            - main
+        paths-ignore:
+            - 'README.md'
+
+permissions:
+    id-token: write
+    contents: read
+
+jobs:
+    training-job:
+        runs-on: [self-hosted, aws-gpu-runner]
+        steps:
+            - name: Checkout Code
+              uses: actions/checkout@v3
+
+            - name: Setup Environment $ Pull data
+              run: |
+                pip install -r requirements.txt
+                dvc pull
+
+            - name: Run Training Model Stage
+              env:
+                MLFLOW_TRACKING_URI: ${{ secrets.MLFLOW_TRACKING_URI }}
+                MLFLOW_TRACKING_USERNAME: ${{ secrets.MLFLOW_TRACKING_USERNAME }}
+                MLFLOW_TRACKING_PASSWORD: ${{ secrets.MLFLOW_TRACKING_PASSWORD }}
+              run: |
+                dvc repro
+
+    deploy-job:
+      needs: training-job
+      runs-on: ubuntu-latest
+      steps:
+        - name: Deloy to AWS EC2
+          uses: appleboy/ssh-action@master
+          with:
+            host: ${{ secrets.AWS_HOST }}
+            username: ${{ secrets.AWS_USER }}
+            key: ${{ secrets.AWS_SSH_KEY }}
+            port: 22
+
+            script: |
+              cd /home/ubuntu/Project_1
+              git pull origin main
+              export MLFLOW_TRACKING_URI=${{ secrets.MLFLOW_TRACKING_URI }}
+              export MLFLOW_TRACKING_USERNAME=${{ secrets.MLFLOW_TRACKING_USERNAME }}
+              export MLFLOW_TRACKING_PASSWORD=${{ secrets.MLFLOW_TRACKING_PASSWORD }}
+              docker-compose up -d --build --force-recreate

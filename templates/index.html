@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Brain Tumor Multi-task Analysis</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Bootstrap 4 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #6c5ce7;
+            --accent-color: #00cec9;
+            --bg-color: #f4f7fa;
+            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --text-color: #2d3436;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-color);
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: #fff;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+            padding: 1rem 2rem;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            color: var(--primary-color) !important;
+            font-size: 1.5rem;
+        }
+
+        .main-container {
+            padding: 40px 0;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #2c3e50;
+            text-align: center;
+        }
+
+        /* Card Styles */
+        .custom-card {
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: var(--card-shadow);
+            border: none;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-header-custom {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 15px 20px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            border-bottom: none;
+        }
+
+        .card-body-custom {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Image Areas */
+        .image-preview-area {
+            width: 100%;
+            min-height: 300px;
+            border: 2px dashed #dfe6e9;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #fafbfc;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .image-preview-area.active {
+            border-color: var(--primary-color);
+            background: #f0f8ff;
+        }
+
+        .preview-img {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        .placeholder-content {
+            text-align: center;
+            color: #b2bec3;
+        }
+
+        .placeholder-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: #dfe6e9;
+        }
+
+        /* Control Panel */
+        .control-panel {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: var(--card-shadow);
+            margin-top: 20px;
+        }
+
+        .btn-custom {
+            border-radius: 50px;
+            padding: 12px 30px;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .btn-upload {
+            background: white;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-upload:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .btn-analyze {
+            background: linear-gradient(to right, #00b894, #00cec9);
+            border: none;
+            color: white;
+        }
+
+        .btn-analyze:hover {
+            box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+            transform: translateY(-2px);
+            background: linear-gradient(to right, #00a884, #00b8b4);
+        }
+
+        /* Results Box */
+        .json-box {
+            background: #2d3436;
+            color: #00cec9;
+            padding: 20px;
+            border-radius: 10px;
+            width: 100%;
+            max-height: 250px;
+            overflow-y: auto;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            border-left: 5px solid var(--accent-color);
+        }
+
+        /* Loading Spinner */
+        #loading {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            background: rgba(255, 255, 255, 0.9);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .loader-content {
+            text-align: center;
+        }
+
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid var(--secondary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        .loading-text {
+            color: var(--secondary-color);
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #b2bec3;
+            font-size: 0.9rem;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-brain mr-2"></i> NeuroScan AI
+            </a>
+            <span class="navbar-text">
+                Multi-task Tumor Analysis
+            </span>
+        </div>
+    </nav>
+
+    <div class="container main-container">
+
+        <div class="row">
+            <!-- Left Column: Upload & Input -->
+            <div class="col-lg-6 mb-4">
+                <div class="custom-card">
+                    <div class="card-header-custom">
+                        <i class="fas fa-file-medical-alt mr-2"></i> Input MRI Scan
+                    </div>
+                    <div class="card-body-custom">
+                        <div class="image-preview-area" id="drop-area">
+                            <img src="" id="photo" class="preview-img">
+                            <div id="placeholder-input" class="placeholder-content">
+                                <div class="placeholder-icon">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                </div>
+                                <h5>Upload MRI Scan</h5>
+                                <p class="small">Supports JPG, PNG</p>
+                            </div>
+                            <canvas style="display:none;" id="canvas"></canvas>
+                        </div>
+
+                        <form id="upload-data" class="w-100">
+                            <input type="file" id="fileinput" accept="image/*" style="display:none;" />
+                            <div class="row">
+                                <div class="col-6">
+                                    <button type="button" class="btn btn-custom btn-upload w-100" id="uload">
+                                        <i class="fas fa-upload mr-2"></i> Choose File
+                                    </button>
+                                </div>
+                                <div class="col-6">
+                                    <button type="button" class="btn btn-custom btn-analyze w-100" id="send">
+                                        <i class="fas fa-microscope mr-2"></i> Analyze
+                                    </button>
+                                </div>
+                            </div>
+                            <input type="hidden" id="url" value="../predict" />
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Results -->
+            <div class="col-lg-6 mb-4">
+
+                <!-- Segmentation Result -->
+                <div class="custom-card mb-4" style="height: auto; min-height: 400px;">
+                    <div class="card-header-custom" style="background: linear-gradient(135deg, #00b894, #00cec9);">
+                        <i class="fas fa-layer-group mr-2"></i> Segmentation Result
+                    </div>
+                    <div class="card-body-custom">
+                        <div id="result-image-box" class="w-100 h-100 d-flex align-items-center justify-content-center">
+                            <div class="placeholder-content">
+                                <div class="placeholder-icon">
+                                    <i class="fas fa-brain"></i>
+                                </div>
+                                <p>Mask visualization will appear here</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Classification Report -->
+                <div class="custom-card" style="height: auto;">
+                    <div class="card-header-custom" style="background: linear-gradient(135deg, #2d3436, #636e72);">
+                        <i class="fas fa-clipboard-list mr-2"></i> Diagnostic Report
+                    </div>
+                    <div class="card-body-custom bg-white">
+                        <div class="jsonRes json-box">
+                            <div><i class="fas fa-info-circle mr-2"></i> System ready. Waiting for analysis...</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 NeuroScan AI Project. Advanced Deep Learning for Medical Imaging.</p>
+    </footer>
+
+    <!-- Loading Overlay -->
+    <div id="loading">
+        <div class="loader-content">
+            <div class="spinner"></div>
+            <div class="loading-text">Processing Image...</div>
+            <p class="text-muted small">Running Classification & Segmentation Models</p>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+    <script>
+        var base_data = "";
+
+        // Function to send request
+        function sendRequest(base64Data) {
+            if (base64Data != "" && base64Data != null) {
+                var url = $("#url").val();
+                $("#loading").css("display", "flex"); // Using flex to center
+
+                $.ajax({
+                    url: url,
+                    type: "post",
+                    cache: false,
+                    async: true,
+                    crossDomain: true,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': '*'
+                    },
+                    data: JSON.stringify({ image: base64Data }),
+                    success: function (res) {
+                        $("#loading").hide();
+
+                        // 1. Handle Segmentation Mask
+                        $("#result-image-box").html("");
+                        try {
+                            var imageData = res[1].image;
+                            if (imageData.length > 10) {
+                                $("#result-image-box").append(
+                                    "<img class='preview-img' style='display:block; animation: fadeIn 0.5s;' src='data:image/png;base64," + imageData + "' alt='Segmentation Mask' />"
+                                );
+                            }
+                        } catch (e) {
+                            $("#result-image-box").html("<span class='text-danger'>Error displaying mask</span>");
+                        }
+
+                        // 2. Handle Classification Result
+                        var classResult = res[0];
+                        var htmlContent = "";
+                        if (classResult.class) {
+                            htmlContent += "<div class='mb-2'><span class='text-light'>Prediction:</span> <h4 class='text-primary d-inline ml-2'>" + classResult.class + "</h4></div>";
+                        }
+                        if (classResult.confidence) {
+                            htmlContent += "<div><span class='text-light'>Confidence:</span> <strong class='ml-2 text-warning'>" + classResult.confidence + "</strong></div>";
+                        }
+
+                        $(".jsonRes").html(htmlContent);
+                    },
+                    error: function (err) {
+                        $("#loading").hide();
+                        $(".jsonRes").html("<span class='text-danger'>Error calling API. Please check server connection.</span>");
+                        console.error(err);
+                    }
+                });
+            } else {
+                alert("Please upload an MRI image first.");
+            }
+        }
+
+        $(document).ready(function () {
+            // Upload button event
+            $('#uload').click(function () {
+                $('#fileinput').trigger('click');
+            });
+
+            // File selection event
+            $("#fileinput").change(function () {
+                if (this.files && this.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        var url = e.target.result;
+                        var img = new Image();
+                        img.crossOrigin = 'Anonymous';
+                        img.onload = function () {
+                            var canvas = document.createElement('CANVAS');
+                            var ctx = canvas.getContext('2d');
+                            canvas.height = this.height;
+                            canvas.width = this.width;
+                            ctx.drawImage(this, 0, 0);
+
+                            // Get clean base64
+                            base_data = canvas.toDataURL('image/png', 1.0).replace(/^data:image.+;base64,/, '');
+                            canvas = null;
+                        };
+                        img.src = url;
+
+                        // Show image in UI
+                        $('#photo').attr('src', url).show();
+                        $('#placeholder-input').hide();
+                    }
+                    reader.readAsDataURL(this.files[0]);
+                }
+            });
+
+            // Predict button event
+            $('#send').click(function () {
+                sendRequest(base_data);
+            });
+        });
+    </script>
+</body>
+
+</html>
