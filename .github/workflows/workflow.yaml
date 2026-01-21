@@ -13,7 +13,7 @@ permissions:
 
 jobs:
     training-job:
-        runs-on: [self-hosted, aws-gpu-runner]
+        runs-on: [self-hosted, gpu-runner]
         steps:
             - name: Checkout Code
               uses: actions/checkout@v3
