@@ -16,7 +16,6 @@ class TrainingModel:
         self.config = config
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-
     def loader_data(self):
 
             train_class_path = os.path.join(self.config.data_classification, 'train')
