@@ -10,21 +10,21 @@ project_name = "Project_1"
 
 list_of_files = [
     ".github/workflows/.gitkeep",
-    f"src/{project_name}/__init__.py",
-    f"src/{project_name}/components/__init__.py",
-    f"src/{project_name}/utils/__init__.py",
-    f"src/{project_name}/configs/__init__.py",
-    f"src/{project_name}/configs/configurations.py",
-    f"src/{project_name}/pipeline/__init__.py",
-    f"src/{project_name}/entity/__init__.py",
-    f"src/{project_name}/constants/__init__.py",
-    "configs/config.yaml",
-    "params.yaml",
-    "requirements.txt",
-    "setup.py",
-    "dvc.yaml",
-    "research/trials.ipynb",
-    "templates/index.html"
+        f"src/{project_name}/__init__.py",
+        f"src/{project_name}/components/__init__.py",
+        f"src/{project_name}/utils/__init__.py",
+        f"src/{project_name}/configs/__init__.py",
+        f"src/{project_name}/configs/configurations.py",
+        f"src/{project_name}/pipeline/__init__.py",
+        f"src/{project_name}/entity/__init__.py",
+        f"src/{project_name}/constants/__init__.py",
+        "configs/config.yaml",
+        "params.yaml",
+        "requirements.txt",
+        "setup.py",
+        "dvc.yaml",
+        "research/trials.ipynb",
+        "templates/index.html"
 ]
 
 for filepath in list_of_files:

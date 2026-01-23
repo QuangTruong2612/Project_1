@@ -18,7 +18,6 @@ class ConfigureManager:
     def get_training_model_config(self) -> TrainingModelConfig:
         training = self.config.training_model
         params = self.params
-        create_directories([training.root_dir])
 
         training_model_config = TrainingModelConfig(
             data_classification=Path(training.data_classification),

@@ -18,7 +18,6 @@ class EvaluationModel:
         self.client = MlflowClient()
 
     def loader_data(self):
-        # ... (Giữ nguyên logic load data cũ của bạn) ...
         test_class_path = os.path.join(self.config.data_classification, 'test')
         test_seg_path = os.path.join(self.config.data_segmentation, 'test')
 
@@ -35,10 +34,6 @@ class EvaluationModel:
         return test_loader
 
     def load_local_model(self):
-        """
-        FIX 2: Load model từ file Local (Output của DVC Training Stage)
-        thay vì download từ MLflow.
-        """
         print(f"--> Đang load model local từ: {self.config.model_path}")
 
         # Khởi tạo kiến trúc model (cần params khớp với training)
@@ -46,7 +41,7 @@ class EvaluationModel:
             n_classes=self.config.n_classes,
             n_segment=self.config.n_segment,
             in_channels=self.config.in_channels,
-            pretrained=False # False vì ta sẽ load weights custom
+            pretrained=False
         )
 
         # Load weights đã train
@@ -63,7 +58,6 @@ class EvaluationModel:
             print(f"Warning: Chưa tìm thấy model {model_name} trên Registry.")
             return None
 
-        # Lấy version mới nhất (vừa được push ở bước Training trước đó)
         latest_version = max([int(v.version) for v in results])
         return str(latest_version)
 
@@ -87,7 +81,6 @@ class EvaluationModel:
         if old_metrics is None:
             promote = True
         else:
-            # Logic so sánh: Ưu tiên Accuracy, sau đó đến Dice
             new_acc = current_metrics.get('accuracy', 0)
             old_acc = old_metrics.get('accuracy', 0)
             new_dice = current_metrics.get('dice', 0)
@@ -114,7 +107,6 @@ class EvaluationModel:
 
         val_loader = self.loader_data()
 
-        # ... (Biến chạy metrics giữ nguyên) ...
         running_dice = 0.0
         running_iou = 0.0
         correct = 0

@@ -1,7 +1,7 @@
 import os
 from box.exceptions import BoxValueError
 import yaml
-from Project_MultitaskModel import logger
+from Project_1 import logger
 import json
 import joblib
 from ensure import ensure_annotations
@@ -64,9 +64,6 @@ def save_json(path: Path, data: dict):
         json.dump(data, f, indent=4)
 
     logger.info(f"json file saved at: {path}")
-
-
-
 
 @ensure_annotations
 def load_json(path: Path) -> ConfigBox:

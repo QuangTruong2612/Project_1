@@ -10,7 +10,7 @@ import mlflow.pytorch
 import os
 
 class PredictPipeline:
-    def __init__(self, model_name="Project_1_MultiTaskModel"):
+    def __init__(self, model_name="MultiTaskModelResNet50"):
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         self.model_name = model_name
         self.model = None # Lazy loading
@@ -35,24 +35,14 @@ class PredictPipeline:
 
             except Exception as e:
                 print(f"Error loading model: {e}")
-                # Fallback: Nếu không nối mạng được, load model local (dự phòng)
-                print("--> Loading local fallback model...")
-                self.model = MultiTaskModelResNet(n_classes=4, n_segment=1, in_channels=3, pretrained=False)
-                # Đường dẫn này phải có sẵn trong container/folder deploy
-                self.model.load_state_dict(torch.load("artifacts/training/model.pth", map_location=self.device))
-                self.model.to(self.device)
-                self.model.eval()
-
+                raise e
         return self.model
 
     def preprocess_image(self, image_input):
-        """
-        Input: Có thể là đường dẫn file (str) hoặc đối tượng PIL Image (từ Streamlit uploader)
-        """
+
         if isinstance(image_input, str):
             image = np.array(Image.open(image_input).convert('RGB'))
         else:
-            # Trường hợp input là PIL Image (vd: từ st.file_uploader)
             image = np.array(image_input.convert('RGB'))
 
         transform = A.Compose([
