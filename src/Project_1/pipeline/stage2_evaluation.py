@@ -1,4 +1,4 @@
-from Project_1.configs.configurations import EvaluationConfig
+from Project_1.configs.configurations import ConfigureManager
 from Project_1.components.evaluation import EvaluationModel
 from Project_1 import logger
 
@@ -8,8 +8,9 @@ class EvaluationModelPipeline:
         pass
 
     def main(self):
-        config = EvaluationConfig()
-        evaluation_model = EvaluationModel(config=config)
+        config = ConfigureManager()
+        evaluation_model = config.get_evaluation_model_config()
+        evaluation_model = EvaluationModel(config=evaluation_model)
         evaluation_model.evaluation()
 
 if __name__ == "__main__":
