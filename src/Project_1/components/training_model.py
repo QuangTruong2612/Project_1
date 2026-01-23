@@ -11,7 +11,6 @@ import dagshub
 import mlflow
 import mlflow.pytorch
 from urllib.parse import urlparse
-
 class TrainingModel:
     def __init__(self, config: TrainingModelConfig):
         self.config = config
