@@ -17,9 +17,6 @@ class PredictPipeline:
         self.class_label = {0: 'Glioma', 1: 'Meningioma', 2: 'No-tumor', 3: 'Pituitary'}
 
     def load_model(self):
-        """
-        Hàm này chỉ chạy 1 lần duy nhất khi khởi động App.
-        """
         if self.model is None:
             print(f"--> Đang tải model {self.model_name}@champion từ DagsHub...")
             try:
