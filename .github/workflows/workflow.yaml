@@ -23,6 +23,9 @@ jobs:
                 MLFLOW_TRACKING_URI: ${{ secrets.MLFLOW_TRACKING_URI }}
                 MLFLOW_TRACKING_USERNAME: ${{ secrets.MLFLOW_TRACKING_USERNAME }}
                 MLFLOW_TRACKING_REPO: ${{ secrets.MLFLOW_TRACKING_REPO }}
+                AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+                AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+                AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
               run: |
                 python3 -m venv venv
                 source venv/bin/activate
