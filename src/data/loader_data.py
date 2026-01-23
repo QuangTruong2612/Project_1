@@ -10,7 +10,7 @@ import albumentations as A
 from albumentations.pytorch import ToTensorV2
 class Data_Seg_Class(Dataset):
     def __init__(self, class_path, seg_path,  transform=None):
-        
+
         self.classifi_path = class_path
         self.img_seg_path = seg_path + '/images'
         self.mask_seg_path = seg_path + '/masks'
@@ -38,9 +38,9 @@ class Data_Seg_Class(Dataset):
         image_path = os.path.join(self.img_seg_path, filename + '.jpg')
         # kiểm tra file ảnh có trong folder segmentation không
         if os.path.isfile(image_path):
-            
+
             mask_path = os.path.join(self.mask_seg_path, filename + '.png')
-            
+
             # Đọc ảnh và mask
             image = np.array(Image.open(image_path).convert('RGB'))
             mask = np.array(Image.open(mask_path).convert('L'))
@@ -61,13 +61,13 @@ class Data_Seg_Class(Dataset):
         label = self.label_map.get(filename, -1)  # nếu không tìm thấy thì = -1
 
         return image, mask, label
-    
+
 def data_loader(data_classification_path, data_segmentation_path, batch_size, shuffle, num_workers, augmentation, seed, img_size):
     np.random.seed(seed)
     random.seed(seed)
     if torch.cuda.is_available():
         torch.cuda.manual_seed_all(seed)
-    
+
     if augmentation:
         transform = A.Compose([
                 A.Resize(img_size, img_size),
@@ -78,9 +78,9 @@ def data_loader(data_classification_path, data_segmentation_path, batch_size, sh
                 A.GaussNoise(var_limit=(0.01, 0.05), p=0.3),
                 A.Normalize(mean=(0.485, 0.456, 0.406), std=(0.229, 0.224, 0.225)),
                 ToTensorV2()
-            ], 
+            ],
             is_check_shapes=False )
-    
+
     else:
         transform = A.Compose([
                 A.Resize(img_size, img_size),

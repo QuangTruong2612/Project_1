@@ -56,6 +56,7 @@ class ConfigureManager:
             img_size = params.IMAGE_SIZE,
             batch_size = params.BATCH_SIZE,
             seed = params.SEED,
+            num_worker = params.NUM_WORKERS,
             in_channels = params.IN_CHANNELS,
             augmentation = params.AUGMENTATION,
             all_params= params,

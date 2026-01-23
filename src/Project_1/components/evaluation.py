@@ -26,7 +26,7 @@ class EvaluationModel:
             data_segmentation_path=test_seg_path,
             batch_size=self.config.batch_size,
             shuffle=False,
-            num_workers=self.config.num_workers,
+            num_workers=self.config.num_worker,
             augmentation=self.config.augmentation,
             seed=self.config.seed,
             img_size=self.config.img_size

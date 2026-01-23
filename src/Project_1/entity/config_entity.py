@@ -34,6 +34,7 @@ class EvaluationModelConfig:
     in_channels: int
     num_workers: int
     img_size: int
+    num_worker: int
     seed: int
     augmentation: bool
     all_params: dict

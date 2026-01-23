@@ -28,7 +28,7 @@ class TrainingModel:
                 data_segmentation_path=train_seg_path,
                 batch_size=self.config.batch_size,
                 shuffle=True,
-                num_workers=self.config.num_workers,
+                num_workers=self.config.num_worker,
                 augmentation=self.config.augmentation,
                 seed=self.config.seed,
                 img_size=self.config.image_size
