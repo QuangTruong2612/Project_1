@@ -40,7 +40,6 @@ class TrainingModel:
             dagshub.init(repo_owner=self.config.repo_owner, repo_name=self.config.repo_name, mlflow=True)
         else:
             print("Running in CI/CD, using existing environment variables.")
-        print(os.environ)
         print(self.device)
         exp_name = "Project_1_Tracking_Model"
         print(f"Setting MLflow experiment to: {exp_name}")
