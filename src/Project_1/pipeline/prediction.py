@@ -23,8 +23,6 @@ class PredictPipeline:
         if self.model is None:
             print(f"--> Đang tải model {self.model_name}@champion từ DagsHub...")
             try:
-                # CÁCH 1: Load trực tiếp bằng Alias (Nhanh, gọn, chuẩn MLOps mới)
-                # Lưu ý: Cần setup biến môi trường MLFLOW_TRACKING_URI, USERNAME, PASSWORD trước khi chạy App
                 model_uri = f"models:/{self.model_name}@champion"
 
                 # Load model về thẳng RAM (MLflow tự handle việc cache local)
