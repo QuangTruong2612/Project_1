@@ -32,7 +32,6 @@ class EvaluationModelConfig:
     n_classes: int
     n_segment: int
     in_channels: int
-    num_workers: int
     img_size: int
     num_worker: int
     seed: int
