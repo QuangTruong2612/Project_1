@@ -48,7 +48,7 @@ class ConfigureManager:
         evaluation_model_config = EvaluationModelConfig(
             model_path=Path(evaluation.model_path),
             root_dir=Path(evaluation.root_dir),
-            repo_name=self.mlflow_tracking_uri,
+            repo_name=self.repo_name,
             repo_owner=self.repo_owner,
             report_path=Path(evaluation.report_path),
             n_classes = params.N_CLASSES,
