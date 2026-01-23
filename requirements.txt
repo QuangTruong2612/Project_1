@@ -29,4 +29,3 @@ awscli
 # Web Server
 Flask
 Flask-Cors
--e .
