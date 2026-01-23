@@ -25,6 +25,8 @@ class TrainingModelConfig:
 class EvaluationModelConfig:
     model_path: Path
     root_dir: Path
+    data_classification: Path
+    data_segmentation: Path
     repo_name: str
     repo_owner: str
     report_path: Path

@@ -48,6 +48,8 @@ class ConfigureManager:
         evaluation_model_config = EvaluationModelConfig(
             model_path=Path(evaluation.model_path),
             root_dir=Path(evaluation.root_dir),
+            data_classification=Path(evaluation.data_classification),
+            data_segmentation=Path(evaluation.data_segmentation),
             repo_name=self.repo_name,
             repo_owner=self.repo_owner,
             report_path=Path(evaluation.report_path),
