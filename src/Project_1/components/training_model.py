@@ -39,7 +39,7 @@ class TrainingModel:
     def train_model(self):
         if "MLFLOW_TRACKING_URI" not in os.environ:
             print("Running locally, initializing DagsHub...")
-            dagshub.init(repo_owner=self.config.repo_owner, repo_name=self.config.repo_name)
+            dagshub.init(repo_owner=self.config.repo_owner, repo_name=self.config.repo_name, mlflow=True)
         else:
             print("Running in CI/CD, using existing environment variables.")
         exp_name = "Project_1_Tracking_Model"

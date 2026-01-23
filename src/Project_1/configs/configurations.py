@@ -12,7 +12,7 @@ class ConfigureManager:
         self.params = read_yaml(params_filepath)
         create_directories([self.config.artifacts_root])
 
-        self.mlflow_tracking_uri = os.getenv('MLFLOW_TRACKING_URI')
+        self.repo_name = os.getenv('MLFLOW_TRACKING_REPO')
         self.repo_owner = os.getenv('MLFLOW_TRACKING_USERNAME')
 
     def get_training_model_config(self) -> TrainingModelConfig:
@@ -22,7 +22,7 @@ class ConfigureManager:
         training_model_config = TrainingModelConfig(
             data_classification=Path(training.data_classification),
             data_segmentation=Path(training.data_segmentation),
-            repo_name=self.mlflow_tracking_uri,
+            repo_name=self.repo_name,
             repo_owner=self.repo_owner,
             n_classes = params.N_CLASSES,
             n_segment = params.N_SEGMENT,

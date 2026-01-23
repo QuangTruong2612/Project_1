@@ -30,19 +30,19 @@ class CombinedLoss(nn.Module):
         super(CombinedLoss, self).__init__()
         self.dice = DiceLoss()
         # BCEWithLogitsLoss đã tích hợp Sigmoid bên trong, rất ổn định
-        self.bce = nn.BCEWithLogitsLoss() 
+        self.bce = nn.BCEWithLogitsLoss()
         self.weight_dice = weight_dice
         self.weight_bce = weight_bce
 
     def forward(self, predictions, targets):
         # predictions: Logits (chưa qua sigmoid)
         # targets: Binary mask (0 hoặc 1)
-        
+
         dice_loss = self.dice(predictions, targets)
         bce_loss = self.bce(predictions, targets)
-        
+
         return self.weight_dice * dice_loss + self.weight_bce * bce_loss
-    
+
 class UncertainlyLoss(nn.Module):
   def __init__(self, task_num):
     super(UncertainlyLoss, self).__init__()
@@ -60,7 +60,7 @@ class UncertainlyLoss(nn.Module):
     precision_sent = torch.exp(self.log_vars[0])
     precision_classify = torch.exp(self.log_vars[1])
 
-    loss = torch.log(precision_sent**0.5) + torch.log(precision_classify**0.5) + loss_sent * (1 / (precision_sent*2)) + loss_classify * (1 / (precision_classify*2))
+    loss = torch.log(precision_sent**0.5) + torch.log(precision_classify**0.5) + loss_seg * (1 / (precision_sent*2)) + loss_classify * (1 / (precision_classify*2))
 
     return loss
 
@@ -75,11 +75,11 @@ class UncertainlyLoss(nn.Module):
 #   def forward(self, sent_logits, sent_labels, classify_logits, classify_labels):
 #     loss_sent = self.loss_sent(sent_logits, sent_labels)
 #     loss_classify = self.loss_classify(classify_logits, classify_labels)
-    
+
 #     loss = loss_sent * self.lambda_segment + loss_classify * self.lambda_classify
-    
+
 #     return loss
-  
+
 # def MultitaskLoss(lambda_classify : float|None , lambda_segment: float|None, task_num : int|None, name_loss ='uncertainly'):
 #     if name_loss == "uncertainly":
 #       return UncertainlyLoss(task_num=task_num)
