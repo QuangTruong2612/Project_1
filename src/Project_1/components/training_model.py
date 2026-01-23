@@ -31,7 +31,7 @@ class TrainingModel:
                 num_workers=self.config.num_worker,
                 augmentation=self.config.augmentation,
                 seed=self.config.seed,
-                img_size=self.config.image_size
+                img_size=self.config.img_size
             )
 
             return train_loader
