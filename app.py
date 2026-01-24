@@ -47,8 +47,8 @@ def predictRoute():
 
         response_data = [
             {"class": result['class']},
-            {"confidence": result['confidence']},
-            {"image": result['image']} # Ảnh Segmentation (Base64) trả về
+            {"image": result['image']}, # Ảnh Segmentation (Base64) trả về
+            {"confidence": result['confidence']}
         ]
         return jsonify(response_data)
 
