@@ -56,7 +56,7 @@ jobs:
               docker run -d \
                 --name web-container \
                 --restart always \
-                -p 8080:8000 \
+                -p 8080:8080 \
                 -e MLFLOW_TRACKING_URI=${{ secrets.MLFLOW_TRACKING_URI }} \
                 -e MLFLOW_TRACKING_USERNAME=${{ secrets.MLFLOW_TRACKING_USERNAME }} \
                 -e MLFLOW_TRACKING_REPO=${{ secrets.MLFLOW_TRACKING_REPO }} \
