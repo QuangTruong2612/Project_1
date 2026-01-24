@@ -55,27 +55,27 @@ By forcing the model to learn both *what* the tumor is and *where* it is at the 
 
 01. **Clone the repository**
 
-   ```ruby
+   ```bash
    git clone [https://github.com/QuangTruong2612/Project_1.git](https://github.com/QuangTruong2612/Project_1.git)
    cd Project_1
     ```
 
 02. **Create ca conda environment**
 
-    ```ruby
+    ```bash
     conda create -n project-env python=3.10 -y
     conda activate project-env
     ```
 
 03. **Install th requirements**
 
-    ```ruby
+    ```bash
     pip install -r requirements.txt
     ```
 
 04.**Export  mlflow tracking**
 
-    ```ruby
+    ```bash
     export MLFLOW_TRACKING_URI=[https://dagshub.com/YourUser/YourRepo.mlflow](https://dagshub.com/YourUser/YourRepo.mlflow)
     export MLFLOW_TRACKING_USERNAME=YourUser
     export MLFLOW_TRACKING_PASSWORD=YourToken
@@ -83,7 +83,7 @@ By forcing the model to learn both *what* the tumor is and *where* it is at the 
 
 05. **DVC cmd**
 
-    ```ruby
+    ```bash
     dvc init
     dvc repro
     dvc dag
@@ -91,7 +91,7 @@ By forcing the model to learn both *what* the tumor is and *where* it is at the 
 
 06. **Run Web App**
 
-    ```ruby
+    ```bash
    python app.pys
    ```
 
@@ -119,7 +119,7 @@ Workflow Diagram:
   2. Security Group: Open ports 8080 (Custom TCP) and 22 (SSH).
   3. Install Docker & Git:
 
-    ```ruby
+    ```bash
     sudo apt-get update -y
     sudo apt-get install docker.io docker-compose git -y
     sudo usermod -aG docker $USER
@@ -127,7 +127,7 @@ Workflow Diagram:
     ```
 
   4. Clone Repo (First time only):
-    ```ruby
+    ```bash
     cd /home/ubuntu/
     git clone [https://github.com/QuangTruong2612/Project_1.git](https://github.com/QuangTruong2612/Project_1.git) project-1
     ```
