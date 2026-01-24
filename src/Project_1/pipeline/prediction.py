@@ -68,18 +68,14 @@ class PredictPipeline:
             mask = torch.sigmoid(seg_output)
             mask = (mask > 0.5).float()
 
-        # 4. Post-process (Visualization)
-        # Resize mask về kích thước ảnh gốc (để overlay cho đẹp)
         mask_np = mask.squeeze().cpu().numpy().astype(np.uint8)
 
-        # Resize ảnh gốc về 256x256 để khớp với mask (hoặc ngược lại)
-        # Ở đây ta dùng ảnh đã resize trong preprocess để hiển thị cho đồng bộ
         display_img = cv2.resize(original_img, (256, 256))
-        display_img = cv2.cvtColor(display_img, cv2.COLOR_RGB2BGR) # OpenCV dùng BGR
+        display_img = cv2.cvtColor(display_img, cv2.COLOR_RGB2BGR)
 
         # Tạo lớp phủ màu đỏ
         colored_mask = np.zeros_like(display_img)
-        colored_mask[:, :, 2] = 255 # Red channel in BGR
+        colored_mask[:, :, 2] = 255
 
         # Áp dụng mask
         colored_mask = cv2.bitwise_and(colored_mask, colored_mask, mask=mask_np)
