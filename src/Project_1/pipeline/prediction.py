@@ -23,8 +23,8 @@ class PredictPipeline:
                 model_uri = f"models:/{self.model_name}@champion"
 
                 # Load model về thẳng RAM (MLflow tự handle việc cache local)
-                self.model = mlflow.pytorch.load_model(model_uri)
-                self.model.to(self.device)
+                self.model = mlflow.pytorch.load_model(model_uri, map_location=torch.device('cpu'))
+                # self.model.to(self.device)
                 self.model.eval()
                 print("--> Model loaded successfully!")
 
@@ -46,7 +46,7 @@ class PredictPipeline:
             ToTensorV2()
         ])
         augmented = transform(image=image)
-        return augmented['image'].unsqueeze(0).to(self.device), image
+        return augmented['image'].unsqueeze(0) , image
 
     def predict(self, image_input):
         # 1. Đảm bảo model đã load (Singleton Pattern)
