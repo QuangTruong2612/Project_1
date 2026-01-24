@@ -14,7 +14,6 @@ class EvaluationModel:
         self.config = config
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-        # FIX 1: Khởi tạo Client ngay tại __init__ để dùng xuyên suốt
         self.client = MlflowClient()
 
     def loader_data(self):
@@ -82,9 +81,9 @@ class EvaluationModel:
             promote = True
         else:
             new_acc = current_metrics.get('accuracy', 0)
-            old_acc = old_metrics.get('accuracy', 0)
+            old_acc = old_metrics.get('Accuracy', 0)
             new_dice = current_metrics.get('dice', 0)
-            old_dice = old_metrics.get('dice', 0)
+            old_dice = old_metrics.get('Dice', 0)
 
             print(f"Battle: New Acc ({new_acc:.4f}) vs Old Acc ({old_acc:.4f})")
 

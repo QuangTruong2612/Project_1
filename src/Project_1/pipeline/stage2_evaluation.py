@@ -13,6 +13,7 @@ class EvaluationModelPipeline:
         evaluation_model = EvaluationModel(config=evaluation_model)
         evaluation_model.evaluation()
 
+
 if __name__ == "__main__":
     try:
         logger.info(f">>>>>> Stage {STAGE_NAME} started <<<<<<")
