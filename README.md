@@ -47,10 +47,10 @@ The model is trained on the **BRISC 2025** dataset, aggregated from public sourc
 We utilize a hybrid architecture designed for multi-task performance:
 * **Backbone (Encoder):** **ResNet50** (Pre-trained) for robust feature extraction.
 * **Decoder:** **U-Net** structure for precise segmentation mask generation.
-* **Heads:** A dedicated Classification Head attached to the bottleneck.
+* **Heads:** Classification Head and Segmentatio Head
 
 <div align="center">
-  <img src="./images/image-2.png" alt="Model Architecture" width="700"/>
+  <img src="./images/image2.png" alt="Model Architecture" width="700"/>
 </div>
 
 ## 🔄 4. Project Workflow
