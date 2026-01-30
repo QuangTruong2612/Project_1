@@ -15,4 +15,4 @@ logging.basicConfig(
     handlers=[logging.FileHandler(log_filepath), logging.StreamHandler(sys.stdout)],
 )
 
-logger = logging.getLogger("cnnClassifierLogger")
+logger = logging.getLogger("Project_1_logger")
